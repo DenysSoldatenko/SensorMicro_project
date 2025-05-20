@@ -1,0 +1,28 @@
+package com.example.sensorgenerator.models;
+
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class SensorReading {
+
+  @NotNull
+  private Long sensorId;
+
+  @PastOrPresent
+  private LocalDateTime timestamp;
+
+  @NotNull
+  @DecimalMin("0.0")
+  private Double measurement;
+
+  @NotNull
+  private MeasurementType measurementType;
+}
