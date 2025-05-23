@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.ResponseEntity.status;
 
 import com.example.sensorgenerator.dtos.SensorReadingRequestDto;
+import com.example.sensorgenerator.mappers.DataMapper;
 import com.example.sensorgenerator.models.SensorReading;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
