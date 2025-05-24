@@ -3,8 +3,8 @@ package com.example.sensorgenerator.mappers;
 import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 import static org.mapstruct.ReportingPolicy.ERROR;
 
-import com.example.sensorgenerator.dtos.SensorReadingRequestDto;
-import com.example.sensorgenerator.models.SensorReading;
+import com.example.sensorgenerator.dtos.SensorDataDto;
+import com.example.sensorgenerator.models.SensorData;
 import org.mapstruct.Mapper;
 
 @Mapper(
@@ -14,7 +14,7 @@ import org.mapstruct.Mapper;
 )
 public interface DataMapper {
 
-  SensorReading toEntity(SensorReadingRequestDto dto);
+  SensorData toEntity(SensorDataDto dto);
 
-  SensorReadingRequestDto toDto(SensorReading entity);
+  SensorDataDto toDto(SensorData entity);
 }

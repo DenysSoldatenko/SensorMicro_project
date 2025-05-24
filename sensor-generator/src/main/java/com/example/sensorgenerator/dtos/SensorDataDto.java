@@ -5,11 +5,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import java.time.LocalDateTime;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
-public class SensorReadingRequestDto {
+public class SensorDataDto {
 
   @NotNull(message = "Sensor ID must not be null")
   private Long sensorId;

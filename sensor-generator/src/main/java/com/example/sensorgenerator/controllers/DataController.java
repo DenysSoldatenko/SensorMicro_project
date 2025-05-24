@@ -3,9 +3,10 @@ package com.example.sensorgenerator.controllers;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.ResponseEntity.status;
 
-import com.example.sensorgenerator.dtos.SensorReadingRequestDto;
+import com.example.sensorgenerator.dtos.SensorDataDto;
 import com.example.sensorgenerator.mappers.DataMapper;
-import com.example.sensorgenerator.models.SensorReading;
+import com.example.sensorgenerator.models.SensorData;
+import com.example.sensorgenerator.services.KafkaDataService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +28,11 @@ public class DataController {
   private final KafkaDataService kafkaDataService;
 
   @PostMapping("/send")
-  public ResponseEntity<Void> sendSensorData(@Valid @RequestBody SensorReadingRequestDto requestDto) {
+  public ResponseEntity<Void> sendSensorData(@Valid @RequestBody SensorDataDto requestDto) {
     log.info("Received sensor data: {}", requestDto);
 
-    SensorReading sensorReading = dataMapper.toEntity(requestDto);
-    kafkaDataService.send(sensorReading);
+    SensorData sensorData = dataMapper.toEntity(requestDto);
+    kafkaDataService.send(sensorData);
 
     log.info("Sensor data queued for Kafka sending.");
     return status(ACCEPTED).build();
