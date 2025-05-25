@@ -1,3 +1,12 @@
 spring:
   application:
     name: sensor-generator
+
+
+
+sensor:
+  kafka:
+    topics:
+      temperature: sensor-temperature-topic
+      voltage: sensor-voltage-topic
+      power: sensor-power-topic

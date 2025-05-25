@@ -1,6 +1,8 @@
 package com.example.sensorgenerator.services;
 
-import com.example.sensorgenerator.models.MeasurementType;
+import static java.util.Objects.requireNonNull;
+
+import com.example.sensorgenerator.configurations.KafkaTopicProperties;
 import com.example.sensorgenerator.models.SensorData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,25 +14,26 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaDataServiceImpl implements KafkaDataService {
 
-  private final KafkaTemplate<String, SensorData> kafkaTemplate;
+  private final KafkaTopicProperties topics;
+  private final KafkaTemplate<String, SensorData> kafka;
 
   @Override
-  public void send(SensorData sensorData) {
-    String topic = resolveTopic(sensorData.getMeasurementType());
-    kafkaTemplate.send(topic, sensorData);
-  }
+  public void send(SensorData data) {
+    requireNonNull(data, "SensorData is null");
+    requireNonNull(data.getMeasurementType(), "MeasurementType is null");
 
-  /**
-   * Resolve Kafka topic name from measurement type.
-   *
-   * @param measurementType the measurement type
-   * @return the Kafka topic name
-   */
-  private String resolveTopic(MeasurementType measurementType) {
-    return switch (measurementType) {
-      case TEMPERATURE -> "sensor-temperature-topic";
-      case VOLTAGE -> "sensor-voltage-topic";
-      case POWER -> "sensor-power-topic";
-    };
+    String topic = topics.getTopicForType(data.getMeasurementType());
+    if (topic == null || topic.isBlank()) {
+      throw new IllegalStateException("No Kafka topic for type: " + data.getMeasurementType());
+    }
+
+    kafka.send(topic, data).whenComplete((res, ex) -> {
+      if (ex == null) {
+        var meta = res.getRecordMetadata();
+        log.info("Sent to topic={} partition={} offset={}", meta.topic(), meta.partition(), meta.offset());
+      } else {
+        log.error("Failed to send to topic={}: {}", topic, ex.getMessage(), ex);
+      }
+    });
   }
 }
