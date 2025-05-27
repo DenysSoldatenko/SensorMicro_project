@@ -7,11 +7,7 @@ import com.example.sensorgenerator.dtos.SensorDataDto;
 import com.example.sensorgenerator.models.SensorData;
 import org.mapstruct.Mapper;
 
-@Mapper(
-  componentModel = "spring",
-  injectionStrategy = CONSTRUCTOR,
-  unmappedTargetPolicy = ERROR
-)
+@Mapper(componentModel = "spring", injectionStrategy = CONSTRUCTOR, unmappedTargetPolicy = ERROR)
 public interface DataMapper {
 
   SensorData toEntity(SensorDataDto dto);

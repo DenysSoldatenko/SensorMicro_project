@@ -4,9 +4,11 @@ import static java.util.Objects.requireNonNull;
 
 import com.example.sensorgenerator.configurations.KafkaTopicProperties;
 import com.example.sensorgenerator.models.SensorData;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -35,5 +37,25 @@ public class KafkaDataServiceImpl implements KafkaDataService {
         log.error("Failed to send to topic={}: {}", topic, ex.getMessage(), ex);
       }
     });
+  }
+
+  @Async
+  @Override
+  public void sendBatchAsync(List<SensorData> batch, int delaySeconds) {
+    for (SensorData data : batch) {
+      send(data);
+      log.debug("Dispatched sensor data: sensorId={}, type={}, value={}, timestamp={}", data.getSensorId(), data.getMeasurementType(), data.getMeasurement(), data.getTimestamp());
+
+      if (delaySeconds > 0) {
+        try {
+          Thread.sleep(delaySeconds * 1000L);
+        } catch (InterruptedException ex) {
+          Thread.currentThread().interrupt();
+          log.warn("Batch transmission interrupted: {}", ex.getMessage());
+          return;
+        }
+      }
+    }
+    log.info("Completed sending {} sensor data record(s)", batch.size());
   }
 }
