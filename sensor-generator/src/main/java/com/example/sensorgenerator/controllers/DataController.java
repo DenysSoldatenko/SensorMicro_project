@@ -8,6 +8,8 @@ import com.example.sensorgenerator.mappers.DataMapper;
 import com.example.sensorgenerator.models.SensorData;
 import com.example.sensorgenerator.services.KafkaDataService;
 import com.example.sensorgenerator.utils.SensorDataFactory;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -27,11 +29,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/data")
+@Tag(name = "Sensor Data Controller", description = "Endpoints for sending and generating sensor data")
 public class DataController {
 
   private final DataMapper dataMapper;
   private final KafkaDataService kafkaDataService;
 
+  @Operation(
+    summary = "Send sensor data",
+    description = "Accepts a single sensor data payload and queues it for Kafka sending"
+  )
   @PostMapping("/send")
   public ResponseEntity<Void> sendSensorData(@Valid @RequestBody SensorDataDto requestDto) {
     SensorData sensorData = dataMapper.toEntity(requestDto);
@@ -40,6 +47,10 @@ public class DataController {
     return status(ACCEPTED).build();
   }
 
+  @Operation(
+    summary = "Generate and send a batch of sensor data records",
+    description = "Auto-generates a batch of sensor data records and queues them for Kafka sending. Optional delay in seconds between each send"
+  )
   @PostMapping("/generate")
   public ResponseEntity<Void> generateAndSendBatch(
       @RequestParam(defaultValue = "10") @Min(1) @Max(1000) int count,
