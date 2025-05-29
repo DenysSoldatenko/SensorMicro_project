@@ -11,6 +11,9 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+/**
+ * KafkaDataService implementation responsible for publishing sensor data to appropriate Kafka topics.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

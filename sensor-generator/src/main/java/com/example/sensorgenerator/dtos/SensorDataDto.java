@@ -9,6 +9,10 @@ import jakarta.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import lombok.Data;
 
+/**
+ * Data Transfer Object representing incoming sensor data.
+ * Used for API input validation and documentation.
+ */
 @Data
 @Schema(description = "DTO representing a sensor data payload sent to the system.")
 public class SensorDataDto {

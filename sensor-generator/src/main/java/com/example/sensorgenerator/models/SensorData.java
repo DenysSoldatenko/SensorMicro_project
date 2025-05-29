@@ -8,6 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a unit of sensor data.
+ *
+ * <p>This model is used to encapsulate information sent from a sensor device.
+ * Includes validation constraints for API payload integrity.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

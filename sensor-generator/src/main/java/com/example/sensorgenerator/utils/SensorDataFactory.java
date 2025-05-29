@@ -10,6 +10,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Utility class for generating randomized {@link SensorData} instances.
+ */
 @UtilityClass
 public final class SensorDataFactory {
 

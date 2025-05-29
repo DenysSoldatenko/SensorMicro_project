@@ -16,6 +16,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
+  /**
+   * Configures the OpenAPI documentation for the Sensor Generator API.
+   *
+   * @return the OpenAPI instance with basic API info and server definition
+   */
   @Bean
   public OpenAPI openApi() {
     return new OpenAPI()

@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for managing sensor data operations including sending and generating sample data.
+ */
 @Slf4j
 @Validated
 @RestController
@@ -35,9 +38,15 @@ public class DataController {
   private final DataMapper dataMapper;
   private final KafkaDataService kafkaDataService;
 
+  /**
+   * Accepts a sensor data payload and queues it for Kafka dispatch.
+   *
+   * @param requestDto the sensor data DTO
+   * @return HTTP 202 Accepted
+   */
   @Operation(
-    summary = "Send sensor data",
-    description = "Accepts a single sensor data payload and queues it for Kafka sending"
+      summary = "Send sensor data",
+      description = "Accepts a single sensor data payload and queues it for Kafka sending"
   )
   @PostMapping("/send")
   public ResponseEntity<Void> sendSensorData(@Valid @RequestBody SensorDataDto requestDto) {
@@ -47,9 +56,17 @@ public class DataController {
     return status(ACCEPTED).build();
   }
 
+  /**
+   * Generates a batch of random sensor data and sends them asynchronously to Kafka.
+   * A delay between each send can be specified via request parameter.
+   *
+   * @param count         number of records to generate (default 10, max 1000)
+   * @param delaySeconds  delay in seconds between each send (default 0, max 60)
+   * @return HTTP 202 Accepted
+   */
   @Operation(
-    summary = "Generate and send a batch of sensor data records",
-    description = "Auto-generates a batch of sensor data records and queues them for Kafka sending. Optional delay in seconds between each send"
+      summary = "Generate and send a batch of sensor data records",
+      description = "Auto-generates a batch of sensor data records and queues them for Kafka sending. Optional delay in seconds between each send"
   )
   @PostMapping("/generate")
   public ResponseEntity<Void> generateAndSendBatch(
