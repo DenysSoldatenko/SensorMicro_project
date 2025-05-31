@@ -1,1 +1,23 @@
-spring.application.name=sensor-analyzer
+server:
+  port: 8082
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      group-id: sensor-data-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.example.sensoranalyzer.models
+        spring.json.value.default.type: com.example.sensoranalyzer.models.SensorData
+      auto-offset-reset: earliest
+  application:
+    name: sensor-analyzer
+
+sensor:
+  kafka:
+    topics:
+      temperature: sensor-temperature-topic
+      voltage: sensor-voltage-topic
+      power: sensor-power-topic
