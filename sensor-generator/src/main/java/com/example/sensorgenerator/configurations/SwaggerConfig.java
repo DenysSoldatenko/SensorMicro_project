@@ -25,8 +25,8 @@ public class SwaggerConfig {
   public OpenAPI openApi() {
     return new OpenAPI()
       .info(apiInfo())
-      .servers(List.of(new Server().url("http://localhost:8081").description("Primary API Server")))
-      .components(new Components()); // No auth components for public API
+      .servers(List.of(new Server().url("http://localhost:8081").description("Sensor Generator API Server")))
+      .components(new Components());
   }
 
   private Info apiInfo() {
