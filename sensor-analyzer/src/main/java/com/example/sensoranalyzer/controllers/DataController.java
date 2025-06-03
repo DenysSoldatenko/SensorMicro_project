@@ -3,7 +3,7 @@ package com.example.sensoranalyzer.controllers;
 import static org.springframework.http.ResponseEntity.ok;
 
 import com.example.sensoranalyzer.models.SensorData;
-import com.example.sensoranalyzer.services.SensorDataConsumerService;
+import com.example.sensoranalyzer.services.KafkaDataService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Sensor Data Controller", description = "Endpoints to inspect consumed Kafka messages")
 public class DataController {
 
-  private final SensorDataConsumerService consumerService;
+  private final KafkaDataService consumerService;
 
   @Operation(
       summary = "Get recently consumed messages (all types)",

@@ -9,7 +9,7 @@ import java.util.List;
  * <p>Provides access to the latest received messages of various measurement types
  * such as temperature, voltage, power, or all combined.
  */
-public interface SensorDataConsumerService {
+public interface KafkaDataService {
 
   /**
    * Retrieves the most recently consumed temperature sensor messages.
