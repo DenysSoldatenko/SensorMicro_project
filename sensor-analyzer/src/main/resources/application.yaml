@@ -2,8 +2,10 @@ server:
   port: 8082
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   kafka:
-    bootstrap-servers: localhost:29092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
     consumer:
       group-id: sensor-data-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
