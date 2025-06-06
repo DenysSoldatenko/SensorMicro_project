@@ -3,7 +3,17 @@ server:
 
 spring:
   config:
-    import: optional:file:.env[.properties]
+    import: optional:file:sensor-analyzer/.env[.properties]
+  datasource:
+    url: jdbc:postgresql://${DATASOURCE_HOST}:5432/${DATASOURCE_DATABASE}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yaml
+    enabled: true
+  jpa:
+    open-in-view: false
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
     consumer:
