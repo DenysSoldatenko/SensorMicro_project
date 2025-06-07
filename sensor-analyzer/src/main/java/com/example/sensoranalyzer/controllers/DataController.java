@@ -4,14 +4,17 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import com.example.sensoranalyzer.models.SensorData;
 import com.example.sensoranalyzer.services.KafkaDataService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * of different measurement types (temperature, voltage, power).
  */
 @Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/data")
@@ -27,39 +31,32 @@ public class DataController {
 
   private final KafkaDataService consumerService;
 
-  @Operation(
-      summary = "Get recently consumed messages (all types)",
-      description = "Returns the last 50 consumed Kafka messages for debugging/testing purposes"
-  )
   @GetMapping("/messages")
-  public ResponseEntity<List<SensorData>> getConsumedMessages() {
-    return ok(consumerService.getLastMessages());
+  public ResponseEntity<List<SensorData>> getConsumedMessages(
+      @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
+  ) {
+    return ok(consumerService.getLastMessages(limit));
   }
 
-  @Operation(
-      summary = "Get recently consumed temperature messages",
-      description = "Returns the last 50 consumed Kafka messages of type TEMPERATURE"
-  )
   @GetMapping("/messages/temperature")
-  public ResponseEntity<List<SensorData>> getTemperatureMessages() {
-    return ok(consumerService.getLastTemperatureMessages());
+  public ResponseEntity<List<SensorData>> getTemperatureMessages(
+      @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
+  ) {
+    return ok(consumerService.getLastTemperatureMessages(limit));
   }
 
-  @Operation(
-      summary = "Get recently consumed voltage messages",
-      description = "Returns the last 50 consumed Kafka messages of type VOLTAGE"
-  )
+
   @GetMapping("/messages/voltage")
-  public ResponseEntity<List<SensorData>> getVoltageMessages() {
-    return ok(consumerService.getLastVoltageMessages());
+  public ResponseEntity<List<SensorData>> getVoltageMessages(
+      @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
+  ) {
+    return ok(consumerService.getLastVoltageMessages(limit));
   }
 
-  @Operation(
-      summary = "Get recently consumed power messages",
-      description = "Returns the last 50 consumed Kafka messages of type POWER"
-  )
   @GetMapping("/messages/power")
-  public ResponseEntity<List<SensorData>> getPowerMessages() {
-    return ok(consumerService.getLastPowerMessages());
+  public ResponseEntity<List<SensorData>> getPowerMessages(
+      @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
+  ) {
+    return ok(consumerService.getLastPowerMessages(limit));
   }
 }

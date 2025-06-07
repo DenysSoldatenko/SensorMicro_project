@@ -5,7 +5,7 @@ import static com.example.sensoranalyzer.models.MeasurementType.TEMPERATURE;
 import static com.example.sensoranalyzer.models.MeasurementType.VOLTAGE;
 
 import com.example.sensoranalyzer.models.SensorData;
-import com.example.sensoranalyzer.utils.SensorDataStore;
+import com.example.sensoranalyzer.repositories.SensorDataRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,34 +13,30 @@ import org.springframework.stereotype.Service;
 /**
  * Implementation of {@link KafkaDataService} that provides access to
  * recently consumed sensor data messages for different measurement types.
- *
- * <p>This service delegates storage and retrieval responsibilities
- * to a {@link SensorDataStore} which maintains bounded in-memory queues
- * of the latest consumed messages per measurement type.
  */
 @Service
 @RequiredArgsConstructor
 public class KafkaDataServiceImpl implements KafkaDataService {
 
-  private final SensorDataStore sensorDataStore;
+  private final SensorDataRepository sensorDataRepository;
 
   @Override
-  public List<SensorData> getLastTemperatureMessages() {
-    return sensorDataStore.getLastMessagesByType(TEMPERATURE);
+  public List<SensorData> getLastTemperatureMessages(int limit) {
+    return sensorDataRepository.findRecentByTypeLimited(TEMPERATURE.name(), limit);
   }
 
   @Override
-  public List<SensorData> getLastVoltageMessages() {
-    return sensorDataStore.getLastMessagesByType(VOLTAGE);
+  public List<SensorData> getLastVoltageMessages(int limit) {
+    return sensorDataRepository.findRecentByTypeLimited(VOLTAGE.name(), limit);
   }
 
   @Override
-  public List<SensorData> getLastPowerMessages() {
-    return sensorDataStore.getLastMessagesByType(POWER);
+  public List<SensorData> getLastPowerMessages(int limit) {
+    return sensorDataRepository.findRecentByTypeLimited(POWER.name(), limit);
   }
 
   @Override
-  public List<SensorData> getLastMessages() {
-    return sensorDataStore.getAllLastMessages();
+  public List<SensorData> getLastMessages(int limit) {
+    return sensorDataRepository.findRecentAllLimited(limit);
   }
 }
