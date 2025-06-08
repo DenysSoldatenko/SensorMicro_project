@@ -1,8 +1,5 @@
 package com.example.sensorgenerator.controllers;
 
-import static org.springframework.http.HttpStatus.ACCEPTED;
-import static org.springframework.http.ResponseEntity.status;
-
 import com.example.sensorgenerator.dtos.SensorDataDto;
 import com.example.sensorgenerator.mappers.DataMapper;
 import com.example.sensorgenerator.models.SensorData;
@@ -35,11 +32,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Sensor Data Controller", description = "Endpoints for sending and generating sensor data")
 public class DataController {
 
+  private static final int DEFAULT_BATCH_SIZE = 10;
+  private static final int MAX_BATCH_SIZE = 1000;
+  private static final int DEFAULT_DELAY_SECONDS = 0;
+  private static final int MAX_DELAY_SECONDS = 60;
+
   private final DataMapper dataMapper;
   private final KafkaDataService kafkaDataService;
 
   /**
-   * Accepts a sensor data payload and queues it for Kafka dispatch.
+   * Accepts a sensor data payload and sends it to Kafka.
    *
    * @param requestDto the sensor data DTO
    * @return HTTP 202 Accepted
@@ -52,16 +54,15 @@ public class DataController {
   public ResponseEntity<Void> sendSensorData(@Valid @RequestBody SensorDataDto requestDto) {
     SensorData sensorData = dataMapper.toEntity(requestDto);
     kafkaDataService.send(sensorData);
-    log.info("Sensor data queued for sending: sensorId={}, type={}, timestamp={}", sensorData.getSensorId(), sensorData.getMeasurementType(), sensorData.getTimestamp());
-    return status(ACCEPTED).build();
+    log.info("Sensor data sent to Kafka | sensorId={} | type={} | timestamp={}", sensorData.getSensorId(), sensorData.getMeasurementType(), sensorData.getTimestamp());
+    return ResponseEntity.accepted().build();
   }
 
   /**
-   * Generates a batch of random sensor data and sends them asynchronously to Kafka.
-   * A delay between each send can be specified via request parameter.
+   * Generates random sensor data and sends each record with an optional delay.
    *
-   * @param count         number of records to generate (default 10, max 1000)
-   * @param delaySeconds  delay in seconds between each send (default 0, max 60)
+   * @param count        number of records to generate (1–1000)
+   * @param delaySeconds delay between sends (0–60 seconds)
    * @return HTTP 202 Accepted
    */
   @Operation(
@@ -70,12 +71,13 @@ public class DataController {
   )
   @PostMapping("/generate")
   public ResponseEntity<Void> generateAndSendBatch(
-      @RequestParam(defaultValue = "10") @Min(1) @Max(1000) int count,
-      @RequestParam(defaultValue = "0") @Min(0) @Max(60) int delaySeconds
+      @RequestParam(name = "count", defaultValue = "10") @Min(DEFAULT_BATCH_SIZE) @Max(MAX_BATCH_SIZE) int count,
+      @RequestParam(name = "delaySeconds", defaultValue = "0") @Min(DEFAULT_DELAY_SECONDS) @Max(MAX_DELAY_SECONDS) int delaySeconds
   ) {
-    log.info("Generating {} sensor data record(s) with delay of {} second(s) between sends", count, delaySeconds);
-    List<SensorData> batch = SensorDataFactory.generateRandomBatch(count);
-    kafkaDataService.sendBatchAsync(batch, delaySeconds);
-    return status(ACCEPTED).build();
+    log.info("Starting batch sensor data generation | count={} | delayBetweenSends={}s", count, delaySeconds);
+    List<SensorData> sensorDataBatch = SensorDataFactory.generateRandomBatch(count);
+    kafkaDataService.sendBatchAsync(sensorDataBatch, delaySeconds);
+    log.info("Dispatched sensor data batch to Kafka | batchSize={} | delay={}s", count, delaySeconds);
+    return ResponseEntity.accepted().build();
   }
 }
