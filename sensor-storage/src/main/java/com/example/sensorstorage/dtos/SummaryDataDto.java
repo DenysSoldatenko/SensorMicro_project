@@ -15,7 +15,7 @@ import lombok.Singular;
  * grouped by measurement type and summary statistics.
  */
 @Builder
-public record SummaryDto(long sensorId, @Singular("entry") Map<MeasurementType, List<SummaryEntryDto>> values) {
+public record SummaryDataDto(long sensorId, @Singular("entry") Map<MeasurementType, List<SummaryEntryDto>> values) {
 
   /**
    * DTO representation of a summary entry (e.g., MIN, MAX).
@@ -34,7 +34,7 @@ public record SummaryDto(long sensorId, @Singular("entry") Map<MeasurementType, 
   }
 
   @JsonCreator
-  public SummaryDto(
+  public SummaryDataDto(
       @JsonProperty("sensorId") long sensorId,
       @JsonProperty("values") Map<MeasurementType, List<SummaryEntryDto>> values
   ) {

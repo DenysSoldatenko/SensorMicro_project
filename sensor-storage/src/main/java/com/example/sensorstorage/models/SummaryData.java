@@ -1,8 +1,5 @@
 package com.example.sensorstorage.models;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -35,16 +32,6 @@ public class SummaryData {
    */
   public void addValue(MeasurementType type, SummaryEntry entry) {
     values.computeIfAbsent(type, k -> new ArrayList<>()).add(entry);
-  }
-
-  /**
-   * Returns an unmodifiable view of summary entries for the specified measurement type.
-   *
-   * @param type the measurement type
-   * @return list of summary entries (or empty list if none exist)
-   */
-  public List<SummaryEntry> getEntriesForType(MeasurementType type) {
-    return values.containsKey(type) ? unmodifiableList(values.get(type)) : emptyList();
   }
 
   /**

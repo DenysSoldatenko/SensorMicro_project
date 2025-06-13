@@ -3,12 +3,15 @@ package com.example.sensorstorage.mappers;
 import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 import static org.mapstruct.ReportingPolicy.ERROR;
 
-import com.example.sensorstorage.dtos.SummaryDto;
+import com.example.sensorstorage.dtos.SummaryDataDto;
+import com.example.sensorstorage.dtos.SummaryDataDto.SummaryEntryDto;
 import com.example.sensorstorage.models.SummaryData;
+import com.example.sensorstorage.models.SummaryData.SummaryEntry;
+import java.util.List;
 import org.mapstruct.Mapper;
 
 /**
- * Mapper interface for converting between {@link SummaryDto} and {@link SummaryData} entities.
+ * Mapper interface for converting between {@link SummaryDataDto} and {@link SummaryData} entities.
  *
  * <p>Uses MapStruct for compile-time mapping generation.
  *
@@ -23,19 +26,15 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", injectionStrategy = CONSTRUCTOR, unmappedTargetPolicy = ERROR)
 public interface SummaryMapper {
 
-  /**
-   * Converts a {@link SummaryDto} to a {@link SummaryData} entity.
-   *
-   * @param dto the source DTO
-   * @return the mapped entity
-   */
-  SummaryData toEntity(SummaryDto dto);
+  SummaryData toEntity(SummaryDataDto dto);
 
-  /**
-   * Converts a {@link SummaryData} entity to a {@link SummaryDto}.
-   *
-   * @param entity the source entity
-   * @return the mapped DTO
-   */
-  SummaryDto toDto(SummaryData entity);
+  SummaryEntry toEntity(SummaryEntryDto dto);
+
+  List<SummaryEntry> toEntity(List<SummaryEntryDto> dtos);
+
+  SummaryDataDto toDto(SummaryData entity);
+
+  SummaryEntryDto toDto(SummaryEntry entity);
+
+  List<SummaryEntryDto> toDto(List<SummaryEntry> entities);
 }
