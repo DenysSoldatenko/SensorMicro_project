@@ -1,4 +1,4 @@
-package com.example.sensoranalyzer.configurations;
+package com.example.sensorconsumer.configurations;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,7 +1,7 @@
-package com.example.sensoranalyzer.utils;
+package com.example.sensorconsumer.utils;
 
-import com.example.sensoranalyzer.models.SensorData;
-import com.example.sensoranalyzer.repositories.SensorDataRepository;
+import com.example.sensorconsumer.models.SensorData;
+import com.example.sensorconsumer.repositories.SensorDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

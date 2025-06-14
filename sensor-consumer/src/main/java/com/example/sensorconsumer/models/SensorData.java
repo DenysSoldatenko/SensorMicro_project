@@ -1,4 +1,4 @@
-package com.example.sensoranalyzer.models;
+package com.example.sensorconsumer.models;
 
 import static jakarta.persistence.EnumType.STRING;
 

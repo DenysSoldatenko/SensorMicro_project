@@ -1,9 +1,9 @@
-package com.example.sensoranalyzer.controllers;
+package com.example.sensorconsumer.controllers;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-import com.example.sensoranalyzer.models.SensorData;
-import com.example.sensoranalyzer.services.KafkaDataService;
+import com.example.sensorconsumer.models.SensorData;
+import com.example.sensorconsumer.services.KafkaDataService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

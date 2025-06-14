@@ -1,6 +1,6 @@
-package com.example.sensoranalyzer.configurations;
+package com.example.sensorconsumer.configurations;
 
-import com.example.sensoranalyzer.models.SensorData;
+import com.example.sensorconsumer.models.SensorData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

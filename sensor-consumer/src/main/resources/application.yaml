@@ -3,7 +3,7 @@ server:
 
 spring:
   config:
-    import: optional:file:sensor-analyzer/.env[.properties]
+    import: optional:file:sensor-consumer/.env[.properties]
   datasource:
     url: jdbc:postgresql://${DATASOURCE_HOST}:5432/${DATASOURCE_DATABASE}
     username: ${DATASOURCE_USERNAME}
@@ -17,15 +17,15 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
     consumer:
-      group-id: sensor-analyzer-group
+      group-id: sensor-consumer-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.example.sensoranalyzer.models
-        spring.json.value.default.type: com.example.sensoranalyzer.models.SensorData
+        spring.json.trusted.packages: com.example.sensorconsumer.models
+        spring.json.value.default.type: com.example.sensorconsumer.models.SensorData
       auto-offset-reset: earliest
   application:
-    name: sensor-analyzer
+    name: sensor-consumer
 
 sensor:
   kafka:

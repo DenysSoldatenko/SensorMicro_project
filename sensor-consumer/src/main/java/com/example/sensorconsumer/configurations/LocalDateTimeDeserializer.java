@@ -1,4 +1,4 @@
-package com.example.sensoranalyzer.configurations;
+package com.example.sensorconsumer.configurations;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;

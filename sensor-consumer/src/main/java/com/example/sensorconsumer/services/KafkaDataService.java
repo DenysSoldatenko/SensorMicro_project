@@ -1,6 +1,6 @@
-package com.example.sensoranalyzer.services;
+package com.example.sensorconsumer.services;
 
-import com.example.sensoranalyzer.models.SensorData;
+import com.example.sensorconsumer.models.SensorData;
 import java.util.List;
 
 public interface KafkaDataService {

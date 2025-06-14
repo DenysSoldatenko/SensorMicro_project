@@ -15,8 +15,8 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.example.sensoranalyzer.models
-        spring.json.value.default.type: com.example.sensoranalyzer.models.SensorData
+        spring.json.trusted.packages: com.example.sensorconsumer.models
+        spring.json.value.default.type: com.example.sensorconsumer.models.SensorData
       auto-offset-reset: earliest
   application:
     name: sensor-storage

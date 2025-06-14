@@ -1,4 +1,4 @@
-package com.example.sensoranalyzer.models;
+package com.example.sensorconsumer.models;
 
 /**
  * Enum representing supported types of sensor measurements.

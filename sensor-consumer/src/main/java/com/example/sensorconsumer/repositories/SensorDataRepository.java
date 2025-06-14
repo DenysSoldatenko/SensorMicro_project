@@ -1,6 +1,6 @@
-package com.example.sensoranalyzer.repositories;
+package com.example.sensorconsumer.repositories;
 
-import com.example.sensoranalyzer.models.SensorData;
+import com.example.sensorconsumer.models.SensorData;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

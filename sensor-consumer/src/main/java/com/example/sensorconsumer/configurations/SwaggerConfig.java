@@ -1,4 +1,4 @@
-package com.example.sensoranalyzer.configurations;
+package com.example.sensorconsumer.configurations;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -25,13 +25,13 @@ public class SwaggerConfig {
   public OpenAPI openApi() {
     return new OpenAPI()
       .info(apiInfo())
-      .servers(List.of(new Server().url("http://localhost:8082").description("Sensor Analyzer API Server")))
+      .servers(List.of(new Server().url("http://localhost:8082").description("Sensor Consumer API Server")))
       .components(new Components());
   }
 
   private Info apiInfo() {
     return new Info()
-      .title("Sensor Analyzer API")
+      .title("Sensor Consumer API")
       .version("1.0.0")
       .description("""
         This API allows inspection of sensor data consumed from Kafka topics.

@@ -1,11 +1,11 @@
-package com.example.sensoranalyzer.services;
+package com.example.sensorconsumer.services;
 
-import static com.example.sensoranalyzer.models.MeasurementType.POWER;
-import static com.example.sensoranalyzer.models.MeasurementType.TEMPERATURE;
-import static com.example.sensoranalyzer.models.MeasurementType.VOLTAGE;
+import static com.example.sensorconsumer.models.MeasurementType.POWER;
+import static com.example.sensorconsumer.models.MeasurementType.TEMPERATURE;
+import static com.example.sensorconsumer.models.MeasurementType.VOLTAGE;
 
-import com.example.sensoranalyzer.models.SensorData;
-import com.example.sensoranalyzer.repositories.SensorDataRepository;
+import com.example.sensorconsumer.models.SensorData;
+import com.example.sensorconsumer.repositories.SensorDataRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
