@@ -3,7 +3,7 @@ server:
 
 spring:
   config:
-    import: optional:file:sensor-generator/.env[.properties]
+    import: optional:file:sensor-producer/.env[.properties]
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
     producer:
@@ -17,7 +17,7 @@ spring:
     properties:
       spring.json.add.type.headers: false
   application:
-    name: sensor-generator
+    name: sensor-producer
 
 sensor:
   kafka:

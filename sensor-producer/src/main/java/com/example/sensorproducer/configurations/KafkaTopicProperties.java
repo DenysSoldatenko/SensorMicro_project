@@ -1,6 +1,6 @@
-package com.example.sensorgenerator.configurations;
+package com.example.sensorproducer.configurations;
 
-import com.example.sensorgenerator.models.MeasurementType;
+import com.example.sensorproducer.models.MeasurementType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

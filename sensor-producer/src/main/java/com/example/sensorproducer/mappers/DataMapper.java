@@ -1,10 +1,10 @@
-package com.example.sensorgenerator.mappers;
+package com.example.sensorproducer.mappers;
 
 import static org.mapstruct.InjectionStrategy.CONSTRUCTOR;
 import static org.mapstruct.ReportingPolicy.ERROR;
 
-import com.example.sensorgenerator.dtos.SensorDataDto;
-import com.example.sensorgenerator.models.SensorData;
+import com.example.sensorproducer.dtos.SensorDataDto;
+import com.example.sensorproducer.models.SensorData;
 import org.mapstruct.Mapper;
 
 /**

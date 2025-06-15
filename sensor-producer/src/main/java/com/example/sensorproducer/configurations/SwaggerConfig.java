@@ -1,4 +1,4 @@
-package com.example.sensorgenerator.configurations;
+package com.example.sensorproducer.configurations;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -25,13 +25,13 @@ public class SwaggerConfig {
   public OpenAPI openApi() {
     return new OpenAPI()
       .info(apiInfo())
-      .servers(List.of(new Server().url("http://localhost:8081").description("Sensor Generator API Server")))
+      .servers(List.of(new Server().url("http://localhost:8081").description("Sensor Producer API Server")))
       .components(new Components());
   }
 
   private Info apiInfo() {
     return new Info()
-      .title("Sensor Generator API")
+      .title("Sensor Producer API")
       .version("1.0.0")
       .description("""
         This API allows external systems to send or simulate IoT sensor data.

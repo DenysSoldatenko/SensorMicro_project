@@ -1,4 +1,4 @@
-package com.example.sensorgenerator.models;
+package com.example.sensorproducer.models;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;

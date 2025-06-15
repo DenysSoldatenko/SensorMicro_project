@@ -1,6 +1,6 @@
-package com.example.sensorgenerator.configurations;
+package com.example.sensorproducer.configurations;
 
-import com.example.sensorgenerator.models.SensorData;
+import com.example.sensorproducer.models.SensorData;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

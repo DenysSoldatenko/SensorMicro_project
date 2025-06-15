@@ -1,6 +1,6 @@
-package com.example.sensorgenerator.dtos;
+package com.example.sensorproducer.dtos;
 
-import com.example.sensorgenerator.models.MeasurementType;
+import com.example.sensorproducer.models.MeasurementType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;

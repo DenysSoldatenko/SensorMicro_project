@@ -1,9 +1,9 @@
-package com.example.sensorgenerator.services;
+package com.example.sensorproducer.services;
 
 import static java.util.Objects.requireNonNull;
 
-import com.example.sensorgenerator.configurations.KafkaTopicProperties;
-import com.example.sensorgenerator.models.SensorData;
+import com.example.sensorproducer.configurations.KafkaTopicProperties;
+import com.example.sensorproducer.models.SensorData;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

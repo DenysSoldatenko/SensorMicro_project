@@ -1,10 +1,11 @@
-package com.example.sensorgenerator.utils;
+package com.example.sensorproducer.utils;
 
+import static java.lang.Math.round;
 import static java.time.LocalDateTime.now;
 import static java.util.concurrent.ThreadLocalRandom.current;
 
-import com.example.sensorgenerator.models.MeasurementType;
-import com.example.sensorgenerator.models.SensorData;
+import com.example.sensorproducer.models.MeasurementType;
+import com.example.sensorproducer.models.SensorData;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
@@ -43,7 +44,7 @@ public final class SensorDataFactory {
     return new SensorData(
       RANDOM.nextLong(SENSOR_ID_BOUND),
       now().withNano(0),
-      RANDOM.nextDouble(MIN_MEASUREMENT, MAX_MEASUREMENT),
+      round(RANDOM.nextDouble(MIN_MEASUREMENT, MAX_MEASUREMENT) * 10.0) / 10.0,
       randomMeasurementType()
     );
   }

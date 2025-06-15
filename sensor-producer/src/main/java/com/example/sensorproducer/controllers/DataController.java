@@ -1,10 +1,10 @@
-package com.example.sensorgenerator.controllers;
+package com.example.sensorproducer.controllers;
 
-import com.example.sensorgenerator.dtos.SensorDataDto;
-import com.example.sensorgenerator.mappers.DataMapper;
-import com.example.sensorgenerator.models.SensorData;
-import com.example.sensorgenerator.services.KafkaDataService;
-import com.example.sensorgenerator.utils.SensorDataFactory;
+import com.example.sensorproducer.dtos.SensorDataDto;
+import com.example.sensorproducer.mappers.DataMapper;
+import com.example.sensorproducer.models.SensorData;
+import com.example.sensorproducer.services.KafkaDataService;
+import com.example.sensorproducer.utils.SensorDataFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

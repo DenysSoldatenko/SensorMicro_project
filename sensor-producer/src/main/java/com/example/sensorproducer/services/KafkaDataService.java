@@ -1,6 +1,6 @@
-package com.example.sensorgenerator.services;
+package com.example.sensorproducer.services;
 
-import com.example.sensorgenerator.models.SensorData;
+import com.example.sensorproducer.models.SensorData;
 import java.util.List;
 
 /**
