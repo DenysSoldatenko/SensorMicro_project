@@ -4,6 +4,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import com.example.sensorconsumer.models.SensorData;
 import com.example.sensorconsumer.services.KafkaDataService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -31,6 +32,16 @@ public class DataController {
 
   private final KafkaDataService consumerService;
 
+  /**
+   * Retrieves the most recent sensor messages for all measurement types.
+   *
+   * @param limit the number of messages to retrieve (1–20)
+   * @return a list of recent sensor messages
+   */
+  @Operation(
+      summary = "Get recent sensor messages",
+      description = "Retrieve the most recent messages consumed from Kafka for all measurement types."
+  )
   @GetMapping("/messages")
   public ResponseEntity<List<SensorData>> getConsumedMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
@@ -38,6 +49,16 @@ public class DataController {
     return ok(consumerService.getLastMessages(limit));
   }
 
+  /**
+   * Retrieves the most recent temperature sensor messages.
+   *
+   * @param limit the number of messages to retrieve (1–20)
+   * @return a list of recent temperature messages
+   */
+  @Operation(
+      summary = "Get recent temperature messages",
+      description = "Retrieve the most recent temperature-related messages consumed from Kafka."
+  )
   @GetMapping("/messages/temperature")
   public ResponseEntity<List<SensorData>> getTemperatureMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
@@ -45,7 +66,16 @@ public class DataController {
     return ok(consumerService.getLastTemperatureMessages(limit));
   }
 
-
+  /**
+   * Retrieves the most recent voltage sensor messages.
+   *
+   * @param limit the number of messages to retrieve (1–20)
+   * @return a list of recent voltage messages
+   */
+  @Operation(
+      summary = "Get recent voltage messages",
+      description = "Retrieve the most recent voltage-related messages consumed from Kafka."
+  )
   @GetMapping("/messages/voltage")
   public ResponseEntity<List<SensorData>> getVoltageMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
@@ -53,6 +83,16 @@ public class DataController {
     return ok(consumerService.getLastVoltageMessages(limit));
   }
 
+  /**
+   * Retrieves the most recent power sensor messages.
+   *
+   * @param limit the number of messages to retrieve (1–20)
+   * @return a list of recent power messages
+   */
+  @Operation(
+      summary = "Get recent power messages",
+      description = "Retrieve the most recent power-related messages consumed from Kafka."
+  )
   @GetMapping("/messages/power")
   public ResponseEntity<List<SensorData>> getPowerMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit

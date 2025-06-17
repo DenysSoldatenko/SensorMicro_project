@@ -5,9 +5,8 @@ import com.example.sensoranalyzer.models.SensorData;
 import com.example.sensoranalyzer.models.SummaryData;
 import com.example.sensoranalyzer.models.SummaryType;
 import com.example.sensoranalyzer.repositories.SummaryRepository;
-import java.util.Set;
-
 import com.example.sensoranalyzer.services.SummaryService;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

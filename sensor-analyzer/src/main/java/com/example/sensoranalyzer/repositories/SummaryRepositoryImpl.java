@@ -27,8 +27,8 @@ public class SummaryRepositoryImpl implements SummaryRepository {
     Boolean exists = redisTemplate.opsForSet().isMember(sensorKey, String.valueOf(sensorId));
 
     return Boolean.FALSE.equals(exists)
-      ? Optional.empty()
-      : Optional.of(SummaryBuilder.buildSummary(redisTemplate, sensorId, measurementTypes, summaryTypes));
+        ? Optional.empty()
+        : Optional.of(SummaryBuilder.buildSummary(redisTemplate, sensorId, measurementTypes, summaryTypes));
   }
 
   @Override
