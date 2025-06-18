@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/data")
 @Tag(name = "Sensor Data Controller", description = "Endpoints to inspect consumed Kafka messages")
-public class DataController {
+public class ConsumerController {
 
   private final KafkaDataService consumerService;
 

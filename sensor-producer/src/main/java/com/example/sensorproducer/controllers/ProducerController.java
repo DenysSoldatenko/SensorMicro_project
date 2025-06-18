@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/data")
 @Tag(name = "Sensor Data Controller", description = "Endpoints for sending and generating sensor data")
-public class DataController {
+public class ProducerController {
 
   private static final int DEFAULT_BATCH_SIZE = 10;
   private static final int MAX_BATCH_SIZE = 1000;
