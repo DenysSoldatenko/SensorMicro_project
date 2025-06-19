@@ -1,12 +1,11 @@
 package com.example.sensorproducer.dtos;
 
 import com.example.sensorproducer.models.MeasurementType;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import lombok.Data;
 
 /**
@@ -26,12 +25,11 @@ public class SensorDataDto {
 
   @NotNull(message = "Timestamp is required")
   @PastOrPresent(message = "Timestamp cannot be in the future")
-  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   @Schema(
-      description = "Timestamp when the measurement was taken (ISO-8601 format)",
-      example = "2025-08-12T10:15:30"
+      description = "Timestamp when the measurement was taken (ISO-8601 with timezone)",
+      example = "2025-08-12T10:15:30Z"
   )
-  private LocalDateTime timestamp;
+  private OffsetDateTime timestamp;
 
   @NotNull(message = "Measurement is required")
   @DecimalMin(value = "0.0", message = "Measurement must be non-negative")

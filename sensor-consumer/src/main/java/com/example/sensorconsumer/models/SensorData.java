@@ -9,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import lombok.Data;
 
 /**
@@ -28,7 +28,7 @@ public class SensorData {
   private Long sensorId;
 
   @Column(name = "timestamp")
-  private LocalDateTime timestamp;
+  private OffsetDateTime timestamp;
 
   @Column(name = "measurement")
   private Double measurement;

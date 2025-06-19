@@ -1,13 +1,15 @@
 package com.example.sensorproducer.utils;
 
 import static java.lang.Math.round;
-import static java.time.LocalDateTime.now;
+import static java.time.OffsetDateTime.now;
 import static java.util.concurrent.ThreadLocalRandom.current;
 
 import com.example.sensorproducer.models.MeasurementType;
 import com.example.sensorproducer.models.SensorData;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
 import lombok.experimental.UtilityClass;
 
@@ -20,7 +22,7 @@ public final class SensorDataFactory {
   private static final long SENSOR_ID_BOUND = 1000L;
   private static final double MIN_MEASUREMENT = 0.0;
   private static final double MAX_MEASUREMENT = 100.0;
-
+  private static final AtomicLong NANO_OFFSET = new AtomicLong(0);
   private static final ThreadLocalRandom RANDOM = current();
 
   /**
@@ -43,7 +45,7 @@ public final class SensorDataFactory {
   public static SensorData generateRandomSensorData() {
     return new SensorData(
       RANDOM.nextLong(SENSOR_ID_BOUND),
-      now().withNano(0),
+      now(ZoneOffset.UTC).plusNanos(NANO_OFFSET.incrementAndGet() * 1_000),
       round(RANDOM.nextDouble(MIN_MEASUREMENT, MAX_MEASUREMENT) * 10.0) / 10.0,
       randomMeasurementType()
     );

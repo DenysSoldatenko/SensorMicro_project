@@ -3,7 +3,7 @@ package com.example.sensoranalyzer.models;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class SensorData {
   private Long sensorId;
 
   @PastOrPresent
-  private LocalDateTime timestamp;
+  private OffsetDateTime timestamp;
 
   @NotNull
   @DecimalMin("0.0")
