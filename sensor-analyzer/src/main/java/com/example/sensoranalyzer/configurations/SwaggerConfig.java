@@ -25,7 +25,7 @@ public class SwaggerConfig {
   public OpenAPI openApi() {
     return new OpenAPI()
       .info(apiInfo())
-      .servers(List.of(new Server().url("http://localhost:8083").description("Sensor Analyzer API Server")))
+      .servers(List.of(new Server().url("http://localhost:8080").description("Sensor Analyzer API Server")))
       .components(new Components());
   }
 
