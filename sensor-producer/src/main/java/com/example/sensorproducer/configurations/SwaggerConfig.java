@@ -22,10 +22,15 @@ public class SwaggerConfig {
    * @return the OpenAPI instance with basic API info and server definition
    */
   @Bean
-  public OpenAPI openApi() {
+  public OpenAPI sensorProducerOpenApi() {
+    String serverUrl = "http://localhost:8081";
     return new OpenAPI()
       .info(apiInfo())
-      .servers(List.of(new Server().url("http://localhost:8081").description("Sensor Producer API Server")))
+      .servers(List.of(
+        new Server()
+          .url(serverUrl)
+          .description("Primary server for Sensor Producer API. Use this for local testing environments.")
+      ))
       .components(new Components());
   }
 
@@ -34,9 +39,7 @@ public class SwaggerConfig {
       .title("Sensor Producer API")
       .version("1.0.0")
       .description("""
-        This API allows external systems to send or simulate IoT sensor data.
-        It supports real-time data ingestion and random data generation across supported measurement types
-        such as temperature, voltage, and power.
+        The **Sensor Producer API** sends **real-time sensor data** from IoT devices or generates **simulated data** for testing and analytics. It supports **Temperature**, **Voltage**, and **Power** measurements, enables **batch generation** for load testing, and delivers all data reliably to downstream systems via **Kafka**. All endpoints expect **JSON payloads** with **sensor ID**, **measurement type**, **value**, and **timestamp**.
         """)
       .termsOfService("https://example.com/terms")
       .contact(new Contact()
