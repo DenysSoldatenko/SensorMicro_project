@@ -6,6 +6,8 @@ import com.example.sensorproducer.models.SensorData;
 import com.example.sensorproducer.services.KafkaDataService;
 import com.example.sensorproducer.utils.SensorDataFactory;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -50,6 +52,11 @@ public class ProducerController {
       summary = "Send sensor data",
       description = "Accepts a single sensor data payload and queues it for Kafka sending"
   )
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "202", description = "Accepted: sensor data queued successfully"),
+      @ApiResponse(responseCode = "400", description = "Bad Request: invalid payload or validation failure"),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error: failure sending to Kafka")
+  })
   @PostMapping("/send")
   public ResponseEntity<Void> sendSensorData(@Valid @RequestBody SensorDataDto requestDto) {
     SensorData sensorData = dataMapper.toEntity(requestDto);
@@ -69,6 +76,11 @@ public class ProducerController {
       summary = "Generate and send a batch of sensor data records",
       description = "Auto-generates a batch of sensor data records and queues them for Kafka sending. Optional delay in seconds between each send"
   )
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "202", description = "Accepted: batch generation started successfully"),
+      @ApiResponse(responseCode = "400", description = "Bad Request: invalid count or delay parameter"),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error: failure sending batch to Kafka")
+  })
   @PostMapping("/generate")
   public ResponseEntity<Void> generateAndSendBatch(
       @RequestParam(name = "count", defaultValue = "10") @Min(DEFAULT_BATCH_SIZE) @Max(MAX_BATCH_SIZE) int count,

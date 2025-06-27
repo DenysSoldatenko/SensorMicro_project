@@ -39,7 +39,10 @@ public class SwaggerConfig {
       .title("Sensor Producer API")
       .version("1.0.0")
       .description("""
-        The **Sensor Producer API** sends **real-time sensor data** from IoT devices or generates **simulated data** for testing and analytics. It supports **Temperature**, **Voltage**, and **Power** measurements, enables **batch generation** for load testing, and delivers all data reliably to downstream systems via **Kafka**. All endpoints expect **JSON payloads** with **sensor ID**, **measurement type**, **value**, and **timestamp**.
+        The **Sensor Producer API** sends **real-time sensor data** from IoT devices or generates **simulated data**
+        for testing and analytics. It supports **Temperature**, **Voltage**, and **Power** measurements, enables
+        **batch generation** for load testing, and delivers all data reliably to downstream systems via **Kafka**.
+        All endpoints expect **JSON payloads** with **sensor ID**, **measurement type**, **value**, and **timestamp**.
         """)
       .termsOfService("https://example.com/terms")
       .contact(new Contact()
