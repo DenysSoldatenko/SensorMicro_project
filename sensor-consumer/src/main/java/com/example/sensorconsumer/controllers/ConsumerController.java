@@ -40,7 +40,7 @@ public class ConsumerController {
    */
   @Operation(
       summary = "Get recent sensor messages",
-      description = "Retrieve the most recent messages consumed from Kafka for all measurement types."
+      description = "Retrieve the most recent messages consumed from Kafka for all measurement types"
   )
   @GetMapping("/messages")
   public ResponseEntity<List<SensorData>> getConsumedMessages(
@@ -57,7 +57,7 @@ public class ConsumerController {
    */
   @Operation(
       summary = "Get recent temperature messages",
-      description = "Retrieve the most recent temperature-related messages consumed from Kafka."
+      description = "Retrieve the most recent temperature-related messages consumed from Kafka"
   )
   @GetMapping("/messages/temperature")
   public ResponseEntity<List<SensorData>> getTemperatureMessages(
@@ -74,7 +74,7 @@ public class ConsumerController {
    */
   @Operation(
       summary = "Get recent voltage messages",
-      description = "Retrieve the most recent voltage-related messages consumed from Kafka."
+      description = "Retrieve the most recent voltage-related messages consumed from Kafka"
   )
   @GetMapping("/messages/voltage")
   public ResponseEntity<List<SensorData>> getVoltageMessages(
@@ -91,7 +91,7 @@ public class ConsumerController {
    */
   @Operation(
       summary = "Get recent power messages",
-      description = "Retrieve the most recent power-related messages consumed from Kafka."
+      description = "Retrieve the most recent power-related messages consumed from Kafka"
   )
   @GetMapping("/messages/power")
   public ResponseEntity<List<SensorData>> getPowerMessages(

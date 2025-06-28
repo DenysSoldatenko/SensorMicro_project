@@ -13,7 +13,7 @@ import lombok.Data;
  * Used for API input validation and documentation.
  */
 @Data
-@Schema(description = "DTO representing a sensor data payload sent to the system.")
+@Schema(description = "DTO representing a sensor data payload sent to the system")
 public class SensorDataDto {
 
   @NotNull(message = "Sensor ID must not be null")

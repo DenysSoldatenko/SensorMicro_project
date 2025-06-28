@@ -23,9 +23,14 @@ public class SwaggerConfig {
    */
   @Bean
   public OpenAPI openApi() {
+    String serverUrl = "http://localhost:8082";
     return new OpenAPI()
       .info(apiInfo())
-      .servers(List.of(new Server().url("http://localhost:8082").description("Sensor Consumer API Server")))
+      .servers(List.of(
+        new Server()
+          .url(serverUrl)
+          .description("Primary server for Sensor Consumer API. Use this for local testing and monitoring environments.")
+      ))
       .components(new Components());
   }
 
@@ -34,10 +39,10 @@ public class SwaggerConfig {
       .title("Sensor Consumer API")
       .version("1.0.0")
       .description("""
-        This API allows inspection of sensor data consumed from Kafka topics.
-        It exposes endpoints to view recently received data across different sensor types,
-        including temperature, voltage, and power.
-        Intended for internal debugging, monitoring, or analysis purposes.
+        The **Sensor Consumer API** monitors and retrieves **real-time sensor data** consumed from Kafka topics.
+        It supports **Temperature**, **Voltage**, and **Power** measurements, allows inspection of
+        **recent sensor readings**, and provides endpoints for **analysis, debugging, and monitoring**.
+        All data is returned in **JSON format** with **sensor ID**, **measurement type**, **value**, and **timestamp**.
         """)
       .termsOfService("https://example.com/terms")
       .contact(new Contact()
