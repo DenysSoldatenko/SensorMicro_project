@@ -29,7 +29,7 @@ public class SwaggerConfig {
       .servers(List.of(
         new Server()
           .url(serverUrl)
-          .description("Primary server for Sensor Producer API. Use this for local testing environments.")
+          .description("Primary server for Sensor Producer API. Use this for local testing environments")
       ))
       .components(new Components());
   }

@@ -5,6 +5,9 @@ import static org.springframework.http.ResponseEntity.ok;
 import com.example.sensorconsumer.models.SensorData;
 import com.example.sensorconsumer.services.KafkaDataService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -42,6 +45,11 @@ public class ConsumerController {
       summary = "Get recent sensor messages",
       description = "Retrieve the most recent messages consumed from Kafka for all measurement types"
   )
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Ok: Successfully retrieved recent sensor messages"),
+      @ApiResponse(responseCode = "400", description = "Bad Request: invalid limit parameter", content = @Content()),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error: failure retrieving messages from service", content = @Content())
+  })
   @GetMapping("/messages")
   public ResponseEntity<List<SensorData>> getConsumedMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
@@ -59,6 +67,11 @@ public class ConsumerController {
       summary = "Get recent temperature messages",
       description = "Retrieve the most recent temperature-related messages consumed from Kafka"
   )
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Ok: Successfully retrieved recent temperature messages"),
+      @ApiResponse(responseCode = "400", description = "Bad Request: invalid limit parameter", content = @Content()),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error: failure retrieving temperature messages", content = @Content())
+  })
   @GetMapping("/messages/temperature")
   public ResponseEntity<List<SensorData>> getTemperatureMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
@@ -76,6 +89,11 @@ public class ConsumerController {
       summary = "Get recent voltage messages",
       description = "Retrieve the most recent voltage-related messages consumed from Kafka"
   )
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Ok: Successfully retrieved recent voltage messages"),
+      @ApiResponse(responseCode = "400", description = "Bad Request: invalid limit parameter", content = @Content()),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error: failure retrieving voltage messages", content = @Content())
+  })
   @GetMapping("/messages/voltage")
   public ResponseEntity<List<SensorData>> getVoltageMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
@@ -93,6 +111,11 @@ public class ConsumerController {
       summary = "Get recent power messages",
       description = "Retrieve the most recent power-related messages consumed from Kafka"
   )
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Ok: Successfully retrieved recent power messages"),
+      @ApiResponse(responseCode = "400", description = "Bad Request: invalid limit parameter", content = @Content()),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error: failure retrieving power messages", content = @Content())
+  })
   @GetMapping("/messages/power")
   public ResponseEntity<List<SensorData>> getPowerMessages(
       @RequestParam(defaultValue = "1") @Min(1) @Max(20) int limit
