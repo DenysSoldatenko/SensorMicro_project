@@ -11,6 +11,9 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * {@link SummaryUpdater} implementation that updates the maximum measurement value for a sensor in Redis.
+ */
 @Component
 @RequiredArgsConstructor
 public class MaxUpdater implements SummaryUpdater {

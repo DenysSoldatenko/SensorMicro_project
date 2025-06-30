@@ -14,6 +14,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository implementation for accessing and updating sensor summaries in Redis.
+ *
+ * <p>Responsible for reading summary data for a sensor, updating Redis-stored summaries
+ * when new sensor data arrives, and maintaining a set of known sensor IDs.
+ *
+ * <p>Supports multiple {@link SummaryUpdater} strategies to update different summary types
+ * (MIN, MAX, SUM, AVG) in an extensible way.
+ */
 @Repository
 @RequiredArgsConstructor
 public class SummaryRepositoryImpl implements SummaryRepository {

@@ -19,6 +19,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 @UtilityClass
 public final class SummaryBuilder {
 
+  /**
+   * Builds a {@link SummaryData} object for a sensor from Redis.
+   *
+   * <p>Iterates over the provided measurement types and summary types, reads the values
+   * from Redis, and adds them to the summary object.
+   *
+   * @param redisTemplate  Redis template for accessing hash values
+   * @param sensorId       the ID of the sensor
+   * @param measurementTypes the measurement types to include
+   * @param summaryTypes   the summary types to include (MIN, MAX, SUM, AVG, etc.)
+   * @return a populated {@link SummaryData} object
+   */
   public static SummaryData buildSummary(RedisTemplate<String, String> redisTemplate, long sensorId, Set<MeasurementType> measurementTypes, Set<SummaryType> summaryTypes) {
     HashOperations<String, String, String> ops = redisTemplate.opsForHash();
     SummaryData summary = new SummaryData(sensorId);

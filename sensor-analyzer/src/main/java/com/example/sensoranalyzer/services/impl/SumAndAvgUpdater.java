@@ -12,6 +12,9 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * {@link SummaryUpdater} implementation that updates the sum and average measurements for a sensor in Redis.
+ */
 @Component
 @RequiredArgsConstructor
 public class SumAndAvgUpdater implements SummaryUpdater {

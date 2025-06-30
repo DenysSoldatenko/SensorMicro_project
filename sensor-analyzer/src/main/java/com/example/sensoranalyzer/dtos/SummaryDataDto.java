@@ -21,6 +21,16 @@ public record SummaryDataDto(long sensorId, @Singular("entry") Map<MeasurementTy
    * DTO representation of a summary entry (e.g., MIN, MAX).
    */
   public record SummaryEntryDto(SummaryType type, double value, long counter) {
+
+    /**
+     * Creates a new summary entry DTO.
+     *
+     * <p>Used by Jackson for deserialization from JSON.
+     *
+     * @param type the type of summary (e.g., MIN, MAX, AVG, SUM)
+     * @param value the numeric value for this summary entry
+     * @param counter the number of measurements contributing to this entry
+     */
     @JsonCreator
     public SummaryEntryDto(
         @JsonProperty("type") SummaryType type,
@@ -33,6 +43,15 @@ public record SummaryDataDto(long sensorId, @Singular("entry") Map<MeasurementTy
     }
   }
 
+  /**
+   * Creates a new summary data DTO for a specific sensor.
+   *
+   * <p>Used by Jackson for deserialization from JSON. Ensures that the values map
+   * is always initialized as an {@link EnumMap} for type safety and ordering.
+   *
+   * @param sensorId the ID of the sensor
+   * @param values map of measurement type to list of summary entries; may be null
+   */
   @JsonCreator
   public SummaryDataDto(
       @JsonProperty("sensorId") long sensorId,

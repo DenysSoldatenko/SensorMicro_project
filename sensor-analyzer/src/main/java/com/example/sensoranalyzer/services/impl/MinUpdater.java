@@ -11,6 +11,9 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+/**
+ * {@link SummaryUpdater} implementation that updates the minimum measurement value for a sensor in Redis.
+ */
 @Component
 @RequiredArgsConstructor
 public class MinUpdater implements SummaryUpdater {

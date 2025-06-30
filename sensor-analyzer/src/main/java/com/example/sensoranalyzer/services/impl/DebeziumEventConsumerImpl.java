@@ -9,6 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of {@link CdcEventConsumerService} for handling Debezium CDC events.
+ *
+ * <p>This service consumes Kafka records containing serialized sensor data (as JSON strings),
+ * maps the payload to {@link SensorData}, and passes it to the {@link SummaryService} for processing.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

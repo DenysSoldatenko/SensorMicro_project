@@ -20,6 +20,11 @@ public class SummaryData {
   // Map from measurement type to summary entries (e.g., AVG, MIN, MAX, etc.)
   private final Map<MeasurementType, List<SummaryEntry>> values = new EnumMap<>(MeasurementType.class);
 
+  /**
+   * Constructs a new SummaryData object for the given sensor.
+   *
+   * @param sensorId the ID of the sensor
+   */
   public SummaryData(long sensorId) {
     this.sensorId = sensorId;
   }
