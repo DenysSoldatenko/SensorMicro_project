@@ -10,26 +10,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * OpenAPI 3 configuration for Sensor Generator microservice.
- * Exposes public, unauthenticated endpoints for sensor data ingestion and generation.
+ * Swagger configuration for the Sensor Producer API.
+ * Provides metadata and server info for OpenAPI documentation.
  */
 @Configuration
 public class SwaggerConfig {
 
   /**
-   * Configures the OpenAPI documentation for the Sensor Generator API.
+   * Creates and configures the OpenAPI specification for the Sensor Producer API.
    *
-   * @return the OpenAPI instance with basic API info and server definition
+   * @return OpenAPI specification instance.
    */
   @Bean
-  public OpenAPI sensorProducerOpenApi() {
+  public OpenAPI openApi() {
     String serverUrl = "http://localhost:8081";
     return new OpenAPI()
       .info(apiInfo())
       .servers(List.of(
         new Server()
           .url(serverUrl)
-          .description("Primary server for Sensor Producer API. Use this for local testing environments")
+          .description("Primary server for Sensor Producer API. Use this for local testing or monitoring")
       ))
       .components(new Components());
   }

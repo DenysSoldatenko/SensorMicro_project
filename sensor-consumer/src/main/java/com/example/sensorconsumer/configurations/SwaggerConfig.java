@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Swagger configuration for the Sensor Analyzer (Kafka Consumer) API.
+ * Swagger configuration for the Sensor Consumer API.
  * Provides metadata and server info for OpenAPI documentation.
  */
 @Configuration
 public class SwaggerConfig {
 
   /**
-   * Creates and configures the OpenAPI specification for the consumer API.
+   * Creates and configures the OpenAPI specification for the Sensor Consumer API.
    *
    * @return OpenAPI specification instance.
    */
@@ -29,7 +29,7 @@ public class SwaggerConfig {
       .servers(List.of(
         new Server()
           .url(serverUrl)
-          .description("Primary server for Sensor Consumer API. Use this for local testing environments")
+          .description("Primary server for Sensor Consumer API. Use this for local testing or monitoring")
       ))
       .components(new Components());
   }
