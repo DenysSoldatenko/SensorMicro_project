@@ -4,6 +4,7 @@ import com.example.sensoranalyzer.models.MeasurementType;
 import com.example.sensoranalyzer.models.SummaryType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +16,32 @@ import lombok.Singular;
  * grouped by measurement type and summary statistics.
  */
 @Builder
-public record SummaryDataDto(long sensorId, @Singular("entry") Map<MeasurementType, List<SummaryEntryDto>> values) {
+@Schema(description = "Aggregated summary statistics for a sensor grouped by measurement type")
+public record SummaryDataDto(
+
+    @Schema(description = "Unique ID of the sensor", example = "101")
+    long sensorId,
+
+    @Singular("entry")
+    @Schema(description = "Map of measurement type to summary entries")
+    Map<MeasurementType, List<SummaryEntryDto>> values
+) {
 
   /**
    * DTO representation of a summary entry (e.g., MIN, MAX).
    */
-  public record SummaryEntryDto(SummaryType type, double value, long counter) {
+  @Schema(name = "SummaryEntryDto", description = "Single summary entry for a measurement type")
+  public record SummaryEntryDto(
+
+      @Schema(description = "Type of summary (MIN, MAX, AVG, SUM)", example = "AVG")
+      SummaryType type,
+
+      @Schema(description = "Numeric value for this summary entry", example = "22.4")
+      double value,
+
+      @Schema(description = "Number of measurements contributing to this entry", example = "10")
+      long counter
+  ) {
 
     /**
      * Creates a new summary entry DTO.
