@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/data")
-@Tag(name = "Sensor Data Controller", description = "Endpoints to inspect consumed Kafka messages")
+@Tag(name = "Sensor Consumer Controller", description = "Endpoints for viewing consumed sensor messages")
 public class ConsumerController {
 
   private final KafkaDataService consumerService;
