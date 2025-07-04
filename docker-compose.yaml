@@ -1,0 +1,221 @@
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  redis_data:
+  debezium_data:
+
+services:
+
+  sensor-analyzer:
+    build:
+      context: sensor-analyzer
+    container_name: sensor-analyzer
+    ports:
+      - "8080:8080"
+    env_file: .env
+    environment:
+      REDIS_HOST: ${DOCKER_REDIS_HOST}
+      REDIS_PORT: ${DOCKER_REDIS_PORT}
+      KAFKA_BOOTSTRAP_SERVER: ${DOCKER_BOOTSTRAP_SERVER}
+    networks:
+      - app-network
+    healthcheck:
+      test: curl --fail http://localhost:8080/actuator/health || exit 1
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 5s
+
+  sensor-consumer:
+    build:
+      context: sensor-consumer
+    container_name: sensor-consumer
+    ports:
+      - "8082:8082"
+    env_file: .env
+    environment:
+      DATASOURCE_HOST: ${DOCKER_DATASOURCE_HOST}
+      DATASOURCE_DATABASE: ${DOCKER_DATASOURCE_DATABASE}
+      DATASOURCE_USERNAME: ${DOCKER_DATASOURCE_USERNAME}
+      DATASOURCE_PASSWORD: ${DOCKER_DATASOURCE_PASSWORD}
+      KAFKA_BOOTSTRAP_SERVER: ${DOCKER_BOOTSTRAP_SERVER}
+    networks:
+      - app-network
+    healthcheck:
+      test: curl --fail http://localhost:8082/actuator/health || exit 1
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 5s
+
+  sensor-producer:
+    build:
+      context: ./sensor-producer
+    container_name: sensor-producer
+    ports:
+      - "8081:8081"
+    env_file: .env
+    environment:
+      KAFKA_BOOTSTRAP_SERVER: ${DOCKER_BOOTSTRAP_SERVER}
+    networks:
+      - app-network
+    healthcheck:
+      test: curl --fail http://localhost:8081/actuator/health || exit 1
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 5s
+
+  postgres:
+    image: postgres:15.1-alpine
+    container_name: sensor_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./sensor-consumer/src/main/resources/liquibase/changesets/v1_create_tables.sql:/docker-entrypoint-initdb.d/init-database.sql
+      - postgres_data:/var/lib/postgresql/data
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DOCKER_DATASOURCE_DATABASE}
+      POSTGRES_USER: ${DOCKER_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${DOCKER_DATASOURCE_PASSWORD}
+    networks:
+      - app-network
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_replication_slots=10
+      -c max_wal_senders=10
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DOCKER_DATASOURCE_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:7.5
+    container_name: sensor_pgadmin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    env_file: .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DOCKER_PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DOCKER_PGADMIN_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.4
+    container_name: sensor_zookeeper
+    ports:
+      - "22181:2181"
+    env_file: .env
+    environment:
+      ZOOKEEPER_CLIENT_PORT: ${DOCKER_ZOOKEEPER_CLIENT_PORT}
+      ZOOKEEPER_TICK_TIME: ${DOCKER_ZOOKEEPER_TICK_TIME}
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.4
+    container_name: sensor_kafka
+    ports:
+      - "29092:29092"
+    env_file: .env
+    environment:
+      KAFKA_BROKER_ID: ${DOCKER_KAFKA_BROKER_ID}
+      KAFKA_ZOOKEEPER_CONNECT: ${DOCKER_KAFKA_ZOOKEEPER_CONNECT}
+      KAFKA_ADVERTISED_LISTENERS: ${DOCKER_KAFKA_ADVERTISED_LISTENERS}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: ${DOCKER_KAFKA_LISTENER_SECURITY_PROTOCOL_MAP}
+      KAFKA_INTER_BROKER_LISTENER_NAME: ${DOCKER_KAFKA_INTER_BROKER_LISTENER_NAME}
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${DOCKER_KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:3.27.0
+    container_name: sensor_kafdrop
+    ports:
+      - "9080:9000"
+    env_file: .env
+    environment:
+      KAFKA_BROKERCONNECT: ${DOCKER_KAFKA_BROKERCONNECT}
+    depends_on:
+      kafka:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: sensor_redis
+    restart: unless-stopped
+    networks:
+      - app-network
+    ports:
+      - "6379:6379"
+    command: >
+      redis-server
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+      --loglevel warning
+      --appendonly yes
+      --appendfilename "appendonly.aof"
+      --appendfsync everysec
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  debezium:
+    image: debezium/connect:2.7.3.Final
+    container_name: sensor_debezium
+    restart: unless-stopped
+    user: "root"
+    env_file: .env
+    networks:
+      - app-network
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      GROUP_ID: ${DOCKER_DEBEZIUM_GROUP_ID}
+      BOOTSTRAP_SERVERS: ${DOCKER_BOOTSTRAP_SERVER}
+      CONFIG_STORAGE_TOPIC: ${DOCKER_DEBEZIUM_CONFIG_STORAGE_TOPIC}
+      OFFSET_STORAGE_TOPIC: ${DOCKER_DEBEZIUM_OFFSET_STORAGE_TOPIC}
+      STATUS_STORAGE_TOPIC: ${DOCKER_DEBEZIUM_STATUS_STORAGE_TOPIC}
+    volumes:
+      - debezium_data:/debezium/data
+      - ./debezium-data/:/on-startup/
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/connectors"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
