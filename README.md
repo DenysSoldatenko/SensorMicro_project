@@ -6,18 +6,6 @@ This microservices project provides a complete system for **IoT or industrial se
 
 ---
 
-## 📖 Table of Contents
-
-1. [Overview](#overview)
-2. [System Architecture](#system-architecture)
-3. [Microservices](#microservices)
-4. [Usage Examples](#usage-examples)
-5. [API Endpoints](#api-endpoints)
-6. [Analytics Examples](#analytics-examples)
-7. [Developer Tips & Best Practices](#developer-tips--best-practices)
-
----
-
 ## 🌟 Overview
 
 **SensorMicro_project** is designed for **high-performance, real-time sensor pipelines**.
@@ -44,9 +32,9 @@ High-level architecture showing **data flow between services and storage**:
 ![Runtime Data Flow](docs/Runtime_Data_Flow.png)  
 *Description: Step-by-step sensor data processing and analytics pipeline.*
 
-# 🛠️ Microservices Overview
+## 🛠️ Microservices Overview
 
-## 1️⃣ Sensor Producer 📝
+### 1️⃣ Sensor Producer 📝
 Handles **sensor data ingestion**.
 
 **Key Features:**
@@ -57,7 +45,7 @@ Handles **sensor data ingestion**.
 
 ---
 
-## 2️⃣ Sensor Consumer 👁️
+### 2️⃣ Sensor Consumer 👁️
 Consumes Kafka messages and exposes **recent sensor readings** via REST.
 
 **Key Features:**
@@ -68,7 +56,7 @@ Consumes Kafka messages and exposes **recent sensor readings** via REST.
 
 ---
 
-## 3️⃣ Sensor Analyzer 📊
+### 3️⃣ Sensor Analyzer 📊
 Aggregates sensor measurements into **analytics summaries** stored in Redis.
 
 **Key Features:**
@@ -79,7 +67,7 @@ Aggregates sensor measurements into **analytics summaries** stored in Redis.
 
 ---
 
-# 🚀 Usage Examples
+## 🚀 Usage Examples
 
 ### Producer Service 📝
 
@@ -100,7 +88,7 @@ Aggregates sensor measurements into **analytics summaries** stored in Redis.
 
 ---
 
-# 📡 API Endpoints
+## 📡 API Endpoints
 
 ### **Sensor Producer API** – Send or generate sensor data
 
@@ -125,7 +113,7 @@ Example output of `/analytics/summary/{sensorId}`:
 
 ---
 
-# 💡 Developer Tips & Best Practices
+## 💡 Developer Tips & Best Practices
 
 - **Kafka:** Use partitions wisely to scale consumers efficiently.
 - **Redis:** Consider TTLs for temporary summaries if needed.
