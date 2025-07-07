@@ -67,27 +67,6 @@ Aggregates sensor measurements into **analytics summaries** stored in Redis.
 
 ---
 
-## 🚀 Usage Examples
-
-### Producer Service 📝
-
-- **Send a single sensor reading** via REST `/api/v1/data/send`
-- **Generate a batch of readings** with configurable batch size and delay via `/api/v1/data/generate`
-
-### Consumer Service 👁️
-
-- **Retrieve last N messages** via `/api/v1/data/messages`
-- **Filter messages** by measurement type: TEMPERATURE, VOLTAGE, POWER
-- Example: `/api/v1/data/messages/temperature?limit=10`
-
-### Analyzer Service 📊
-
-- **Query aggregated metrics** (MIN, MAX, AVG, SUM) per sensor
-- Filter by **measurement type** and **summary type**
-- Example: `/api/v1/analytics/summary/101?mt=TEMPERATURE,POWER&st=AVG,MAX`
-
----
-
 ## 📡 API Endpoints
 
 ### **Sensor Producer API** – Send or generate sensor data
@@ -123,4 +102,3 @@ Example output of `/analytics/summary/{sensorId}`:
 - **Enums:** Prefer Enum types for measurement and summary types to avoid runtime errors.
 - **Logging:** Use structured logging in services for easier debugging and monitoring.
 - **Error Handling:** Handle Kafka/Redis/Postgres errors gracefully to maintain pipeline reliability.
-
